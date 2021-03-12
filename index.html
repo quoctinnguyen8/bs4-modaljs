@@ -15,9 +15,12 @@
 	<div class="container mt-5">
 		<div class="row">
 			<div class="col">
-				<button class="btn btn-success" onclick="alert('Custom alert')">Custom alert modal based</button>
-				<button class="btn btn-danger" onclick="confirm('Custom confirm', alert.bind(window, 'hahaha'))">Custom confirm modal based</button>
-
+				<button class="btn btn-success" onclick="alert('<h1>hahaha</h1>')">Alert bằng modal</button>
+				<button class="btn btn-danger" onclick="confirm('Custom confirm', alert.bind(window, 'Alert sau khi hiện confirm'))">Custom
+					confirm modal based</button>
+				<button id="btn-modal-sm" class="btn btn-info">Tạo & show modal nhỏ</button>
+				<button id="btn-modal-lg" class="btn btn-danger">Tạo & show modal to</button>
+				<button id="btn-modal" class="btn btn-outline-primary">Tạo & show modal thường</button>
 			</div>
 		</div>
 
@@ -31,13 +34,21 @@
 <script src="modal.js"></script>
 
 <script>
-	var mBody = $('<b>').text('Nội dung');
-	var modal = new Modal('Tiêu đề');
-	modal.appendBody(mBody);
-	modal.show();
-
+	$("#btn-modal-sm").click(function (ev) {
+		var modal = new Modal("modal-sm", "Modal nhỏ");
+		modal.useSmallSize();
+		modal.show();
+	});
+	$("#btn-modal-lg").click(function (ev) {
+		var modal = new Modal("modal-lg", "Modal to");
+		modal.useLargeSize();
+		modal.show();
+	});
+	$("#btn-modal").click(function (ev) {
+		var modal = new Modal("modal-lg", "Modal thường");
+		modal.show();
+	});
 
 </script>
-
 
 </html>

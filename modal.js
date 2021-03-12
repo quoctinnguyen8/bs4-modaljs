@@ -9,7 +9,7 @@
  * @param {string} _evType Event type: click, keypress,.
  * @param {function} _event Function of the event
  */
-var ModalButtonEvent = function (_evType, _event) {
+ var ModalButtonEvent = function (_evType, _event) {
 	this.evType = _evType;
 	this.event = _event;
 };
@@ -31,28 +31,35 @@ var ModalButton = function (_bsStyle, _text, _events) {
  * 
  * @param {string} _title Tiêu đề của modal
  */
-var Modal = function (_title, _size) {
-	this.name = "modal-" + (new Date().getTime());
+var Modal = function (_name, _title) {
+	this.name = "modal-" + _name;
 	this.modalConfig = {
 		backdrop: true,
 		keyboard: true,
 	};
 	this.hideOtherModalOnShow = false;
-	this.modalSize = (_size == 'sm' || _size == 'lg') ? 'modal-' + _size : '';
+	var _modal = $("#" + this.name);
+	if (_modal.length) {
+		this.modal = _modal;
+		this.modalTitle = this.modal.find("h5.modal-title");
+		this.modalBody = this.modal.find(".modal-body");
+		this.modalFooter = this.modal.find(".modal-footer");
+	}
+	else {
+		this.modal = $('<div id="' + this.name
+			+ '" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="'
+			+ this.name + '-title" aria-hidden="true">'
+			+ '<div class="modal-dialog" role="document">'
+			+ '<div class="modal-content">');
+		var mTitle = $('<div class="modal-header">'
+			+ '<h5 class="modal-title" id="' + this.name + '-title">' + _title + '</h5>'
+			+ '<button class="close" data-dismiss="modal" aria-label="Close">'
+			+ '<span aria-hidden="true">&times;</span>');
+		this.modalTitle = mTitle.find("h5.modal-title");
+		this.modalBody = $('<div class="modal-body">');
+		this.modalFooter = $('<div class="modal-footer"></div>');
+	}
 
-	this.modal = $('<div id="' + this.name
-		+ '" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="'
-		+ this.name + '-title" aria-hidden="true">'
-		+ '<div class="modal-dialog" role="document">'
-		+ '<div class="modal-content">');
-	var mTitle = $('<div class="modal-header">'
-		+ '<h5 class="modal-title" id="' + this.name + '-title">' + _title + '</h5>'
-		+ '<button class="close" data-dismiss="modal" aria-label="Close">'
-		+ '<span aria-hidden="true">&times;</span>');
-	this.modalTitle = mTitle.find("h5.modal-title");
-	this.modalBody = $('<div class="modal-body">');
-
-	this.modalFooter = $('<div class="modal-footer"></div>');
 	this.modalDialog = this.modal.find(".modal-dialog");
 	this.modalContent = this.modalDialog.find(".modal-content");
 
@@ -79,7 +86,7 @@ var Modal = function (_title, _size) {
 		this.modalTitle.text(title);
 	}
 
-	this.appendBody = function (_body) {
+	this.appendBody = function () {
 		for (var i = 0; i < arguments.length; i++) {
 			this.modalBody.append(arguments[i]);
 		}
@@ -142,26 +149,37 @@ var Modal = function (_title, _size) {
 		this.setFooterButton(modalFooterButton);
 	}
 
+	this.hideModalAfterEndPrimaryEvent = false;
 	this.addPrimaryButtonEvent = function () {
 		var eventType = arguments.length == 1 ? "click" : arguments[0];
 		var evt = arguments.length == 2 ? arguments[1] : arguments[0];
 		var modal = this;
+		var hideModal = this.hideModalAfterEndPrimaryEvent;
 		evt = evt ? evt : function () { };
+
 		this.modalFooter.on(eventType, "button:first-child", function (ev) {
 			evt(ev);
-			modal.hide();
+			if (hideModal === true) {
+				modal.hide();
+			}
 		});
 	}
 
-	this.useNormalSize=function(){
+	this.useNormalSize = function () {
 		this.modalDialog.removeClass('modal-sm modal-lg');
 	}
 
-	this.useLargeSize=function(){
+	this.useLargeSize = function () {
 		this.modalDialog.removeClass('modal-sm').addClass('modal-lg');
 	}
-	this.useSmallSize=function(){
+	this.useSmallSize = function () {
 		this.modalDialog.removeClass('modal-lg').addClass('modal-sm');
+	}
+	this.useBoxShadow = function (_isUsed) {
+		var _shadowVal = _isUsed === true || _isUsed == undefined ? '0 0 20px rgba(0, 0, 0, 0.3)' : '';
+		this.modalDialog.css({
+			boxShadow: _shadowVal
+		});
 	}
 };
 
@@ -172,7 +190,7 @@ var Modal = function (_title, _size) {
 /**
  * alert
  */
-var _alertModal = new Modal("Thông báo");
+var _alertModal = new Modal("alert", "Thông báo");
 _alertModal.setFooterButton(
 	new ModalButton('primary', '\u00A0\u00A0OK\u00A0\u00A0',
 		new ModalButtonEvent('click', _alertModal.hide.bind(_alertModal))
@@ -181,19 +199,22 @@ _alertModal.setFooterButton(
 window.alert = function (_mesg) {
 	_alertModal.setOption(false, true);
 	_alertModal.clearBody();
-	_alertModal.appendBody(_mesg);
+	_alertModal.useBoxShadow();
+	_alertModal.appendBody(_mesg.replace(/</g, '&lt;'));
 	_alertModal.show();
 }
 
 /**
  * confirm
  */
-var _confirmModal = new Modal("Xác nhận");
+var _confirmModal = new Modal("confirm", "Xác nhận");
 _confirmModal.setDefaultFooterButton("Đồng ý", 'Hủy');
 window.confirm = function (_mesg, _onOK) {
+	_confirmModal.hideModalAfterEndPrimaryEvent = true;
 	_confirmModal.addPrimaryButtonEvent(_onOK);
 	_confirmModal.setOption(false, true);
 	_confirmModal.clearBody();
-	_confirmModal.appendBody(_mesg);
+	_confirmModal.useBoxShadow();
+	_confirmModal.appendBody(_mesg.replace(/</g, '&lt;'));
 	_confirmModal.show();
 }
