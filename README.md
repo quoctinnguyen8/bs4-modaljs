@@ -68,6 +68,7 @@ Xóa tất cả phần tử ra khỏi modal body
 #### 7. `setOption(backdrop, keyboard)`
 
 `backdrop : string | boolean`
+
 `keyboard : boolean`
 
 Cài đặt tùy chỉnh cho modal,`backdrop` điều chỉnh background của modal, có thể là `true`/`false`/`'static'`;  `keyboard`cho phép nhấn phím**Esc** để ẩn modal, có thể là`true`/`false`
@@ -103,7 +104,9 @@ Thêm các button vào modal footer, hỗ trợ thêm kèm event
 #### 14. `setDefaultFooterButton(_primaryText, _secondaryText, _primaryEvent)`
 
 `_primaryText : String`
+
 `_secondaryText : String`
+
 `_primaryEvent : Callback | None`
 
 Thêm 02 button vào modal footer với text chỉ định. Event của button phụ (secondary) luôn luôn là đóng modal
@@ -111,6 +114,7 @@ Thêm 02 button vào modal footer với text chỉ định. Event của button p
 #### 15. `addPrimaryButtonEvent(_evType, _evCallback)` hoặc `addPrimaryButtonEvent(_evCallback)`
 
 `_evType : String`
+
 `_evCallback : Callback`
 
 Chỉ định event cho button primary, dùng kèm với hàm **14. `setDefaultFooterButton(...)`** trong trường hợp event chưa được chỉ định
