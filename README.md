@@ -101,24 +101,68 @@ Sử dụng modal với kích thước lớn
 
 Thêm các button vào modal footer, hỗ trợ thêm kèm event
 
-#### 14. `setDefaultFooterButton(_primaryText, _secondaryText, _primaryEvent)`
+#### 14. `setDefaultFooterButton(primaryText, secondaryText, primaryEvent)`
 
-`_primaryText : String`
+`primaryText : String`
 
-`_secondaryText : String`
+`secondaryText : String`
 
-`_primaryEvent : Callback | None`
+`primaryEvent : Function | None`
 
 Thêm 02 button vào modal footer với text chỉ định. Event của button phụ (secondary) luôn luôn là đóng modal
 
-#### 15. `addPrimaryButtonEvent(_evType, _evCallback)` hoặc `addPrimaryButtonEvent(_evCallback)`
+#### 15. `addPrimaryButtonEvent(evType, evCallback)` hoặc `addPrimaryButtonEvent(evCallback)`
 
-`_evType : String`
+`evType : String`
 
-`_evCallback : Callback`
+`evCallback : Function`
 
-Chỉ định event cho button primary, dùng kèm với hàm **14. `setDefaultFooterButton(...)`** trong trường hợp event chưa được chỉ định
+Chỉ định event cho button primary, dùng kèm với hàm **14. `setDefaultFooterButton(...)`** trong trường hợp event cuar button primary chưa được chỉ định
 
-#### 16. Các event liên quan
+#### 16. `afterShow(callBack)`
 
-_Sắp ra mắt_
+Thêm sự kiện after-show cho modal, sự kiện được kích hoạt sau khi gọi hàm `show()`
+
+#### 17. `afterHide(callBack)`
+
+Thêm sự kiện after-hide cho modal, sự kiện được kích hoạt sau khi gọi hàm `hide()`
+
+---
+
+### Thuộc tính
+
+#### 1. `name : String`
+
+Tên modal, đồng thời cũng là id của modal
+
+#### 2. `hideShowingModals : Boolean`
+
+Cho phép ẩn tất cả modal khác đang show trên màn hình khi modal này được show ra, giá trị mặc định là `false`
+
+#### 3. `modal : jQuery Element`
+
+Modal gốc hiện tại
+
+#### 4. `modalTitle : jQuery Element`
+
+Thẻ chứa tiêu đề của modal
+
+#### 5. `modalBody : jQuery Element`
+
+Thẻ modal-body
+
+#### 6. `modalFooter : jQuery Element`
+
+Thẻ modal-footer
+
+#### 7. `modalDialog : jQuery Element`
+
+Thẻ modal-dialog
+
+#### 8. `modalContent : jQuery Element`
+
+Thẻ modal-content
+
+#### 9. `hideModalAfterEndPrimaryEvent : Boolean`
+
+Cho phép modal tự động ẩn sau khi thực hiện sự kiện của button primary, giá trị mặc định là `false`
