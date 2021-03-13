@@ -32,12 +32,13 @@ var ModalButton = function (_bsStyle, _text, _events) {
  * @param {string} _title Tiêu đề của modal
  */
 var Modal = function (_name, _title) {
+	if (!_name) throw "Can't initialize an undefined modal";
 	this.name = "modal-" + _name;
 	this.modalConfig = {
 		backdrop: true,
 		keyboard: true,
 	};
-	this.hideOtherModalOnShow = false;
+	this.hideShowingModals = false;
 	var _modal = $("#" + this.name);
 	if (_modal.length) {
 		this.modal = _modal;
@@ -67,7 +68,7 @@ var Modal = function (_name, _title) {
 
 	this.show = function () {
 		var openingModals = $('.modal.show');
-		if (this.hideOtherModalOnShow) {
+		if (this.hideShowingModals) {
 			for (var i = 0; i < openingModals.length; i++) {
 				var oModal = openingModals[i];
 				if (this.modal != oModal) {
@@ -180,6 +181,18 @@ var Modal = function (_name, _title) {
 		this.modalDialog.css({
 			boxShadow: _shadowVal
 		});
+	}
+
+	/**
+	 * Modal events
+	 */
+
+	this.afterShow = function (evt){
+		this.modal.on("shown.bs.modal",evt);
+	}
+
+	this.afterHide = function (evt){
+		this.modal.on("hidden.bs.modal",evt);
 	}
 };
 
