@@ -71,7 +71,7 @@ Xóa tất cả phần tử ra khỏi modal body
 
 `keyboard : boolean`
 
-Cài đặt tùy chỉnh cho modal,`backdrop` điều chỉnh background của modal, có thể là `true`/`false`/`'static'`;  `keyboard`cho phép nhấn phím**Esc** để ẩn modal, có thể là`true`/`false`
+Cài đặt tùy chỉnh cho modal,`backdrop` điều chỉnh background của modal, có thể là `true`/`false`/`'static'`;  `keyboard`cho phép nhấn phím **Esc** để ẩn modal, có thể là`true`/`false`
 
 #### 8. `resetOptions()`
 
@@ -99,7 +99,7 @@ Sử dụng modal với kích thước lớn
 
 `args : ModalButton | Array of ModalButton`
 
-Thêm các button vào modal footer, hỗ trợ thêm kèm event
+Thêm các button vào modal footer, bao gồm cả event của các button đó
 
 #### 14. `setDefaultFooterButton(primaryText, secondaryText, primaryEvent)`
 
@@ -109,7 +109,7 @@ Thêm các button vào modal footer, hỗ trợ thêm kèm event
 
 `primaryEvent : Function | None`
 
-Thêm 02 button vào modal footer với text chỉ định. Event của button phụ (secondary) luôn luôn là đóng modal
+Thêm **02** button vào modal footer với text chỉ định. Event của button phụ (secondary) luôn luôn là đóng modal
 
 #### 15. `addPrimaryButtonEvent(evType, evCallback)` hoặc `addPrimaryButtonEvent(evCallback)`
 
@@ -166,3 +166,5 @@ Thẻ modal-content
 #### 9. `hideModalAfterEndPrimaryEvent : Boolean`
 
 Cho phép modal tự động ẩn sau khi thực hiện sự kiện của button primary, giá trị mặc định là `false`
+
+---
