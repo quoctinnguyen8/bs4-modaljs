@@ -48,6 +48,7 @@ var Modal = function (_name, _title) {
 
 		this.modalDialog = this.modal.find(".modal-dialog");
 		this.modalContent = this.modalDialog.find(".modal-content");
+		this.modalTitle.text(_title);
 	}
 	else {
 		this.modal = $('<div id="' + this.name
@@ -158,13 +159,13 @@ var Modal = function (_name, _title) {
 	}
 
 	this.hideModalAfterEndPrimaryEvent = false;
-	this.addPrimaryButtonEvent = function () {
+	this.setPrimaryButtonEvent = function () {
 		var eventType = arguments.length == 1 ? "click" : arguments[0];
 		var evt = arguments.length == 2 ? arguments[1] : arguments[0];
 		var modal = this;
 		var hideModal = this.hideModalAfterEndPrimaryEvent;
 		evt = evt ? evt : function () { };
-
+		this.modalFooter.off(eventType, "button:first-child");
 		this.modalFooter.on(eventType, "button:first-child", function (ev) {
 			evt(ev);
 			if (hideModal === true) {
@@ -173,10 +174,22 @@ var Modal = function (_name, _title) {
 		});
 	}
 
+	this.useFullScreenSize = function () {
+		this.modalDialog.css({
+			maxWidth:'100%',
+			marginTop: '0',
+			marginBottom: '0'
+		});
+		this.modalContent.css({
+			height:'100vh'
+		});
+		this.modalBody.css({
+			overflow:"auto"
+		});
+	}
 	this.useNormalSize = function () {
 		this.modalDialog.removeClass('modal-sm modal-lg');
 	}
-
 	this.useLargeSize = function () {
 		this.modalDialog.removeClass('modal-sm').addClass('modal-lg');
 	}
@@ -218,6 +231,7 @@ window.alert = function (_mesg) {
 		)
 	);
 	_alertModal.setOption(false, true);
+	_alertModal.modal.css({ 'z-index': 2000, 'transform': 'scale(0.95)' });
 	_alertModal.clearBody();
 	_alertModal.useBoxShadow();
 	_alertModal.appendBody(_mesg.replace(/</g, '&lt;'));
@@ -231,8 +245,9 @@ window.confirm = function (_mesg, _onOK) {
 	var _confirmModal = new Modal("confirm", "Xác nhận");
 	_confirmModal.setDefaultFooterButton("Đồng ý", 'Hủy');
 	_confirmModal.hideModalAfterEndPrimaryEvent = true;
-	_confirmModal.addPrimaryButtonEvent(_onOK);
+	_confirmModal.setPrimaryButtonEvent(_onOK);
 	_confirmModal.setOption(false, true);
+	_confirmModal.modal.css({'z-index':2000, 'transform':'scale(0.95)'});
 	_confirmModal.clearBody();
 	_confirmModal.useBoxShadow();
 	_confirmModal.appendBody(_mesg.replace(/</g, '&lt;'));
