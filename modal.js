@@ -129,6 +129,7 @@ var Modal = function (_name, _title) {
 		if (!footerBtn || !footerBtn.length){
 			for (var i = 0; i < _arrButton.length; i++) {
 				var item = _arrButton[i];
+				if (item == null) continue;
 				var btn = $('<button class="btn">').addClass("btn-" + item.btnStyle).text(item.text);
 				if (item.events) {
 					for (var j = 0; j < item.events.length; j++) {
@@ -146,14 +147,20 @@ var Modal = function (_name, _title) {
 	this.setDefaultFooterButton = function (_primaryText, _secondaryText, _primaryEvent) {
 		var footerBtn = this.modalFooter.find("button");
 		if (!footerBtn || !footerBtn.length){
-			var modalFooterButton = [
-				new ModalButton('primary', _primaryText,
-				new ModalButtonEvent('click', _primaryEvent)
-				),
-				new ModalButton('light', _secondaryText,
-				new ModalButtonEvent('click', this.hide.bind(this))
-				)
-			];
+			var primaryBtn = new ModalButton(
+								'primary',
+								 _primaryText,
+								new ModalButtonEvent('click', _primaryEvent)
+							);
+			var secondaryBtn = null;
+			if (_secondaryText != null){
+				secondaryBtn = new ModalButton(
+								'light',
+								_secondaryText,
+								new ModalButtonEvent('click', this.hide.bind(this))
+							);
+			}
+			var modalFooterButton = [primaryBtn, secondaryBtn];
 			this.setFooterButton(modalFooterButton);
 		}
 	}
@@ -172,6 +179,12 @@ var Modal = function (_name, _title) {
 				modal.hide();
 			}
 		});
+	}
+
+	this.useJustifyContentStartFooter = function(){
+		var className = 'justify-content-start';
+		if (!this.modalFooter.hasClass(className))
+			this.modalFooter.addClass(className);
 	}
 
 	this.useFullScreenSize = function () {
