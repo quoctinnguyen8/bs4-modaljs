@@ -35,6 +35,7 @@ var Modal = function (_name, _title) {
 	if (!_name) throw "Can't initialize an undefined modal";
 	this.name = "modal-" + _name;
 	this.modalConfig = {
+		show: false,
 		backdrop: true,
 		keyboard: true,
 	};
@@ -52,14 +53,14 @@ var Modal = function (_name, _title) {
 	}
 	else {
 		this.modal = $('<div id="' + this.name
-		+ '" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="'
-		+ this.name + '-title" aria-hidden="true">'
-		+ '<div class="modal-dialog" role="document">'
-		+ '<div class="modal-content">');
+			+ '" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="'
+			+ this.name + '-title" aria-hidden="true">'
+			+ '<div class="modal-dialog" role="document">'
+			+ '<div class="modal-content">');
 		var mTitle = $('<div class="modal-header">'
-		+ '<h5 class="modal-title" id="' + this.name + '-title">' + _title + '</h5>'
-		+ '<button class="close" data-dismiss="modal" aria-label="Close">'
-		+ '<span aria-hidden="true">&times;</span>');
+			+ '<h5 class="modal-title" id="' + this.name + '-title">' + _title + '</h5>'
+			+ '<button class="close" data-dismiss="modal" aria-label="Close">'
+			+ '<span aria-hidden="true">&times;</span>');
 		this.modalTitle = mTitle.find("h5.modal-title");
 		this.modalBody = $('<div class="modal-body">');
 		this.modalFooter = $('<div class="modal-footer"></div>');
@@ -67,6 +68,7 @@ var Modal = function (_name, _title) {
 		this.modalDialog = this.modal.find(".modal-dialog");
 		this.modalContent = this.modalDialog.find(".modal-content");
 		this.modalContent.append(mTitle, this.modalBody);
+		$('body').append(this.modal);
 	}
 
 	this.show = function () {
@@ -126,7 +128,7 @@ var Modal = function (_name, _title) {
 		if (!_arrButton) return;
 		if (!_arrButton.length) _arrButton = [_arrButton];
 		var footerBtn = this.modalFooter.find("button");
-		if (!footerBtn || !footerBtn.length){
+		if (!footerBtn || !footerBtn.length) {
 			for (var i = 0; i < _arrButton.length; i++) {
 				var item = _arrButton[i];
 				if (item == null) continue;
@@ -146,26 +148,26 @@ var Modal = function (_name, _title) {
 
 	this.setDefaultFooterButton = function (_primaryText, _secondaryText, _primaryEvent) {
 		var footerBtn = this.modalFooter.find("button");
-		if (!footerBtn || !footerBtn.length){
+		if (!footerBtn || !footerBtn.length) {
 			var primaryBtn = new ModalButton(
-								'primary',
-								 _primaryText,
-								new ModalButtonEvent('click', _primaryEvent)
-							);
+				'primary',
+				_primaryText,
+				new ModalButtonEvent('click', _primaryEvent)
+			);
 			var secondaryBtn = null;
-			if (_secondaryText != null){
+			if (_secondaryText != null) {
 				secondaryBtn = new ModalButton(
-								'light',
-								_secondaryText,
-								new ModalButtonEvent('click', this.hide.bind(this))
-							);
+					'light',
+					_secondaryText,
+					new ModalButtonEvent('click', this.hide.bind(this))
+				);
 			}
 			var modalFooterButton = [primaryBtn, secondaryBtn];
 			this.setFooterButton(modalFooterButton);
 		}
 	}
 
-	this.hideModalAfterEndPrimaryEvent = false;
+	this.hideModalAfterEndPrimaryEvent = true;
 	this.setPrimaryButtonEvent = function () {
 		var eventType = arguments.length == 1 ? "click" : arguments[0];
 		var evt = arguments.length == 2 ? arguments[1] : arguments[0];
@@ -181,7 +183,7 @@ var Modal = function (_name, _title) {
 		});
 	}
 
-	this.useJustifyContentStartFooter = function(){
+	this.useButtonOnTheRight = function () {
 		var className = 'justify-content-start';
 		if (!this.modalFooter.hasClass(className))
 			this.modalFooter.addClass(className);
@@ -189,15 +191,15 @@ var Modal = function (_name, _title) {
 
 	this.useFullScreenSize = function () {
 		this.modalDialog.css({
-			maxWidth:'100%',
+			maxWidth: '100%',
 			marginTop: '0',
 			marginBottom: '0'
 		});
 		this.modalContent.css({
-			height:'100vh'
+			height: '100vh'
 		});
 		this.modalBody.css({
-			overflow:"auto"
+			overflow: "auto"
 		});
 	}
 	this.useNormalSize = function () {
@@ -220,12 +222,12 @@ var Modal = function (_name, _title) {
 	 * Modal events
 	 */
 
-	this.afterShow = function (evt){
-		this.modal.on("shown.bs.modal",evt);
+	this.afterShow = function (evt) {
+		this.modal.on("shown.bs.modal", evt);
 	}
 
-	this.afterHide = function (evt){
-		this.modal.on("hidden.bs.modal",evt);
+	this.afterHide = function (evt) {
+		this.modal.on("hidden.bs.modal", evt);
 	}
 };
 
@@ -236,17 +238,18 @@ var Modal = function (_name, _title) {
 /**
  * alert
  */
+var _alertModal = new Modal("alert", "Thông báo");
+_alertModal.setFooterButton(
+	new ModalButton('primary', '\u00A0\u00A0OK\u00A0\u00A0',
+		new ModalButtonEvent('click', _alertModal.hide.bind(_alertModal))
+	)
+);
+_alertModal.setOption(false, true);
+_alertModal.modal.css({ 'z-index': 2000, 'transform': 'scale(0.95)' });
+_alertModal.useBoxShadow();
+
 window.alert = function (_mesg) {
-	var _alertModal = new Modal("alert", "Thông báo");
-	_alertModal.setFooterButton(
-		new ModalButton('primary', '\u00A0\u00A0OK\u00A0\u00A0',
-			new ModalButtonEvent('click', _alertModal.hide.bind(_alertModal))
-		)
-	);
-	_alertModal.setOption(false, true);
-	_alertModal.modal.css({ 'z-index': 2000, 'transform': 'scale(0.95)' });
 	_alertModal.clearBody();
-	_alertModal.useBoxShadow();
 	_alertModal.appendBody(_mesg.replace(/</g, '&lt;'));
 	_alertModal.show();
 }
@@ -254,15 +257,14 @@ window.alert = function (_mesg) {
 /**
  * confirm
  */
+var _confirmModal = new Modal("confirm", "Xác nhận");
+_confirmModal.setDefaultFooterButton("Đồng ý", 'Hủy');
+_confirmModal.setOption(false, true);
+_confirmModal.modal.css({ 'z-index': 2000, 'transform': 'scale(0.95)' });
+_confirmModal.useBoxShadow();
 window.confirm = function (_mesg, _onOK) {
-	var _confirmModal = new Modal("confirm", "Xác nhận");
-	_confirmModal.setDefaultFooterButton("Đồng ý", 'Hủy');
-	_confirmModal.hideModalAfterEndPrimaryEvent = true;
 	_confirmModal.setPrimaryButtonEvent(_onOK);
-	_confirmModal.setOption(false, true);
-	_confirmModal.modal.css({'z-index':2000, 'transform':'scale(0.95)'});
 	_confirmModal.clearBody();
-	_confirmModal.useBoxShadow();
 	_confirmModal.appendBody(_mesg.replace(/</g, '&lt;'));
 	_confirmModal.show();
 }

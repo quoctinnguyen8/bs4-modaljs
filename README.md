@@ -95,13 +95,21 @@ Sử dụng modal với kích thước nhỏ
 
 Sử dụng modal với kích thước lớn
 
-#### 13. `setFooterButton(args)`
+#### 13. `useFullScreenSize()`
+
+Sử dụng modal với kích thước toàn màn hình
+
+#### 14. `useButtonOnTheRight()`
+
+Đặt các button ở modal footer về phía bên phải modal
+
+#### 15. `setFooterButton(args)`
 
 `args : ModalButton | Array of ModalButton`
 
 Thêm các button vào modal footer, bao gồm cả event của các button đó
 
-#### 14. `setDefaultFooterButton(primaryText, secondaryText, primaryEvent)`
+#### 16. `setDefaultFooterButton(primaryText, secondaryText, primaryEvent)`
 
 `primaryText : String`
 
@@ -111,19 +119,19 @@ Thêm các button vào modal footer, bao gồm cả event của các button đó
 
 Thêm **02** button vào modal footer với text chỉ định. Event của button phụ (secondary) luôn luôn là đóng modal
 
-#### 15. `addPrimaryButtonEvent(evType, evCallback)` hoặc `addPrimaryButtonEvent(evCallback)`
+#### 17. `addPrimaryButtonEvent(evType, evCallback)` hoặc `addPrimaryButtonEvent(evCallback)`
 
 `evType : String`
 
 `evCallback : Function`
 
-Chỉ định event cho button primary, dùng kèm với hàm **14. `setDefaultFooterButton(...)`** trong trường hợp event cuar button primary chưa được chỉ định
+Chỉ định event cho button primary, dùng kèm với hàm **14. `setDefaultFooterButton(...)`** trong trường hợp event của button primary chưa được chỉ định
 
-#### 16. `afterShow(callBack)`
+#### 18. `afterShow(callBack)`
 
 Thêm sự kiện after-show cho modal, sự kiện được kích hoạt sau khi gọi hàm `show()`
 
-#### 17. `afterHide(callBack)`
+#### 19. `afterHide(callBack)`
 
 Thêm sự kiện after-hide cho modal, sự kiện được kích hoạt sau khi gọi hàm `hide()`
 
@@ -165,6 +173,6 @@ Thẻ modal-content
 
 #### 9. `hideModalAfterEndPrimaryEvent : Boolean`
 
-Cho phép modal tự động ẩn sau khi thực hiện sự kiện của button primary, giá trị mặc định là `false`
+Cho phép modal tự động ẩn sau khi thực hiện sự kiện của button primary, giá trị mặc định là `true`
 
 ---

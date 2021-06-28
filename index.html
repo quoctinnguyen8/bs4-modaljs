@@ -20,7 +20,7 @@
 					confirm modal based</button>
 				<button id="btn-modal-sm" class="btn btn-info">Tạo & show modal nhỏ</button>
 				<button id="btn-modal-lg" class="btn btn-danger">Tạo & show modal to</button>
-				<button id="btn-modal" class="btn btn-outline-primary">Tạo & show modal thường</button>
+				<button id="btn-modal" class="btn btn-outline-primary">Lỗi! Không tạo được modal</button>
 			</div>
 		</div>
 
@@ -37,18 +37,30 @@
 	$("#btn-modal-sm").click(function (ev) {
 		var modal = new Modal("modal-sm", "Modal nhỏ");
 		modal.useSmallSize();
-		modal.show();
-	});
-	$("#btn-modal-lg").click(function (ev) {
-		var modal = new Modal("modal-lg", "Modal to");
-		modal.useLargeSize();
-		modal.show();
-	});
-	$("#btn-modal").click(function (ev) {
-		var modal = new Modal("modal-lg", "Modal thường");
+		modal.setDefaultFooterButton("Button bên phải", null);
+		modal.useButtonOnTheRight();	// Button at right
 		modal.show();
 	});
 
+	$("#btn-modal-lg").click(function (ev) {
+		var modal = new Modal("modal-lg", "Modal to vcl");
+		modal.useFullScreenSize();
+		modal.setDefaultFooterButton('Ok', 'Hủy');
+		// modal.useButtonOnTheRight();
+
+		var content = "123 ab cdfg kkgnb ";
+		var res="";
+		for (let index = 0; index < 1000; index++) {
+			res += content;
+		}
+		modal.appendBody(res);
+		modal.show();
+	});
+
+	$("#btn-modal").click(function (ev) {
+		var modal = new Modal();	// Lỗi do không truyền tên modal
+		modal.show();
+	});
 </script>
 
 </html>
