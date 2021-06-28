@@ -125,7 +125,7 @@ Thêm **02** button vào modal footer với text chỉ định. Event của butt
 
 `evCallback : Function`
 
-Chỉ định event cho button primary, dùng kèm với hàm **14. `setDefaultFooterButton(...)`** trong trường hợp event của button primary chưa được chỉ định
+Chỉ định event cho button primary, dùng kèm với hàm **16. `setDefaultFooterButton(...)`** trong trường hợp event của button primary chưa được chỉ định
 
 #### 18. `afterShow(callBack)`
 
