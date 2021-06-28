@@ -99,9 +99,9 @@ Sử dụng modal với kích thước lớn
 
 Sử dụng modal với kích thước toàn màn hình
 
-#### 14. `useButtonOnTheRight()`
+#### 14. `useButtonOnTheLeft()`
 
-Đặt các button ở modal footer về phía bên phải modal
+Đặt các button ở footer về phía bên trái modal
 
 #### 15. `setFooterButton(args)`
 

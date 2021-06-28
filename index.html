@@ -37,8 +37,8 @@
 	$("#btn-modal-sm").click(function (ev) {
 		var modal = new Modal("modal-sm", "Modal nhỏ");
 		modal.useSmallSize();
-		modal.setDefaultFooterButton("Button bên phải", null);
-		modal.useButtonOnTheRight();	// Button at right
+		modal.setDefaultFooterButton("Button bên trái", null);
+		modal.useButtonOnTheLeft();	// Button at right
 		modal.show();
 	});
 
@@ -46,7 +46,7 @@
 		var modal = new Modal("modal-lg", "Modal to vcl");
 		modal.useFullScreenSize();
 		modal.setDefaultFooterButton('Ok', 'Hủy');
-		// modal.useButtonOnTheRight();
+		// modal.useButtonOnTheLeft();
 
 		var content = "123 ab cdfg kkgnb ";
 		var res="";

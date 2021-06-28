@@ -183,7 +183,7 @@ var Modal = function (_name, _title) {
 		});
 	}
 
-	this.useButtonOnTheRight = function () {
+	this.useButtonOnTheLeft = function () {
 		var className = 'justify-content-start';
 		if (!this.modalFooter.hasClass(className))
 			this.modalFooter.addClass(className);
